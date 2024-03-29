@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Button, View, Platform } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
+// Import your screen components
+import WebVoiceRecognitionScreen from './src/screens/WebVoiceRecognitionScreen';
+import MobileVoiceRecognitionScreen from './src/screens/MobileVoiceRecognitionScreen';
+
+const Stack = createNativeStackNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="WebVoiceRecognition" component={WebVoiceRecognitionScreen} />
+        <Stack.Screen name="MobileVoiceRecognition" component={MobileVoiceRecognitionScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+// Home screen with navigation buttons
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        title="Go to Web Voice Recognition"
+        onPress={() => navigation.navigate('WebVoiceRecognition')}
+      />
+      <Button
+        title="Go to Mobile Voice Recognition"
+        onPress={() => navigation.navigate('MobileVoiceRecognition')}
+      />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
